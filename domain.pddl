@@ -70,8 +70,20 @@
                         (robot-at ?robot ?current)
                         (right ?next ?current)) ; If the next tile is below our current tile
         :effect (and
-                    (not (robot-at ?robot ?current)) ; We're no longer at the current tile
-                    (robot-at ?robot ?next) ; Allow the robot to move to next tile
+                    (not (robot-at ?robot ?current)) ; We're no longer at the current tile.
+                    (robot-at ?robot ?next) ; Allow the robot to move to next tile.
                     (clear ?current)) ; Allow movement back (TODO: Remove?)
     )
+
+    (:action clean-above
+        :parameters (?robot - robot ?current - tile ?toclean - tile)
+        :precondition (and
+                        (robot-at ?robot ?current)
+                        (up ?toclean ?current)
+                        (not (cleaned ?toclean))) ; Make sure the tile we want to clean isn't already clean
+        :effect (and
+                    (cleaned ?toclean)
+                    (not (clear ?toclean)))
+    )
+
 )
