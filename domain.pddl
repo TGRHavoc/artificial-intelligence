@@ -44,7 +44,7 @@
     )
 
     (:action move-up
-        :parameters (?robot - robot ?current - tile ?next - tile)
+        :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
                         (robot-at ?robot ?current)
                         (up ?next ?current) ; If the next tile is above our current tile .
@@ -56,7 +56,7 @@
     ); end move-up
 
     (:action move-left
-        :parameters (?robot - robot ?current - tile ?next - tile)
+        :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
                         (robot-at ?robot ?current)
                         (left ?next ?current) ; If the next tile is to the left of our current tile.
@@ -68,7 +68,7 @@
     )
 
     (:action move-right
-        :parameters (?robot - robot ?current - tile ?next - tile)
+        :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
                         (robot-at ?robot ?current)
                         (right ?next ?current) ; If the next tile is to the right of our current tile .
@@ -85,6 +85,17 @@
                         (robot-at ?robot ?current)
                         (up ?toclean ?current)
                         (not (cleaned ?toclean))) ; Make sure the tile we want to clean isn't already clean
+        :effect (and
+                    (cleaned ?toclean)
+                    (not (clear ?toclean)))
+    )
+
+    (:action clean-below
+        :parameters (?robot - robot ?current ?toclean - tile)
+        :precondition (and
+                        (robot-at ?robot ?current)
+                        (down ?toclean ?current)
+                        (not (cleaned ?toclean)))
         :effect (and
                     (cleaned ?toclean)
                     (not (clear ?toclean)))
