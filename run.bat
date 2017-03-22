@@ -5,7 +5,7 @@ python "E:\GitHub\fast-downward-master\fast-downward.py"^
  --build release64^
  --plan-file plan.pddl^
  domain.pddl %1^
- --search "astar(lmcut())" 
+ --search "astar(ff)" 
 
 REM Remove extraneous files
 del output
