@@ -34,9 +34,10 @@
 
     ;; Action definitions
     (:action move-down
-        :parameters (?robot - robot ?current - tile ?next - tile)
+        :parameters (?robot - robot ?current ?next - tile)
         :precondition (and  (robot-at ?robot ?current)
-                            (down ?next ?current)) ; If the next tile is below our current tile .
+                            (down ?next ?current) ; If the next tile is below our current tile .
+                            (clear ?next))
         :effect (and (not (robot-at ?robot ?current)) ; We're no longer at the current tile .
                      (robot-at ?robot ?next) ; Allow the robot to move to next tile .
                      (clear ?current))
@@ -46,7 +47,8 @@
         :parameters (?robot - robot ?current - tile ?next - tile)
         :precondition (and
                         (robot-at ?robot ?current)
-                        (up ?next ?current)) ; If the next tile is below our current tile
+                        (up ?next ?current) ; If the next tile is above our current tile .
+                        (clear ?next)) ;
         :effect (and
                     (not (robot-at ?robot ?current)) ; We're no longer at the current tile .
                     (robot-at ?robot ?next) ; Allow the robot to move to next tile .
@@ -57,7 +59,8 @@
         :parameters (?robot - robot ?current - tile ?next - tile)
         :precondition (and
                         (robot-at ?robot ?current)
-                        (left ?next ?current)) ; If the next tile is below our current tile.
+                        (left ?next ?current) ; If the next tile is to the left of our current tile.
+                        (clear ?next))
         :effect (and
                     (not (robot-at ?robot ?current)) ; We're no longer at the current tile.
                     (robot-at ?robot ?next) ; Allow the robot to move to next tile.
@@ -68,7 +71,8 @@
         :parameters (?robot - robot ?current - tile ?next - tile)
         :precondition (and
                         (robot-at ?robot ?current)
-                        (right ?next ?current)) ; If the next tile is below our current tile
+                        (right ?next ?current) ; If the next tile is to the right of our current tile .
+                        (clear ?next))
         :effect (and
                     (not (robot-at ?robot ?current)) ; We're no longer at the current tile.
                     (robot-at ?robot ?next) ; Allow the robot to move to next tile.
@@ -76,7 +80,7 @@
     )
 
     (:action clean-above
-        :parameters (?robot - robot ?current - tile ?toclean - tile)
+        :parameters (?robot - robot ?current ?toclean - tile)
         :precondition (and
                         (robot-at ?robot ?current)
                         (up ?toclean ?current)

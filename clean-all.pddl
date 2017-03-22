@@ -40,10 +40,10 @@
 
   (:goal
       (and
-          (cleaned tile_2-1)
-          (cleaned tile_2-2)
           (cleaned tile_1-1)
           (cleaned tile_1-2)
+          (cleaned tile_2-1)
+          (cleaned tile_2-2)
       )
   )
 )
