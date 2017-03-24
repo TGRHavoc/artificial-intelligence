@@ -1,6 +1,7 @@
 ;;Domain for cleaning floor tiles
 ;; A domain file for CMP2020M assignment 2016/2017
 
+
 (define (domain floor-tile)
     ;; We only require some typing to make this plan faster. We can do without!
     (:requirements :typing)
