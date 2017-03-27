@@ -1,14 +1,13 @@
 ;;Domain for cleaning floor tiles
 ;; A domain file for CMP2020M assignment 2016/2017
 
-
 (define (domain floor-tile)
     ;; We only require some typing to make this plan faster. We can do without!
     (:requirements :typing)
 
     ;; We have two types: robots and the tiles, both are objects
     (:types robot tile - object)
-
+    
     ;; define all the predicates as they are used in the probem files
     (:predicates
         ;; described what tile a robot is at
@@ -34,90 +33,116 @@
     )
 
     ;; Action definitions
-
-    ; Allow the robot to move down
+    
+    ;; Move actions (moves the robot from one tile to another)
+    
+    ;; Allow the robot to move to the tile below it's current position
     (:action move-down
-        ; We need the robot (to check the current tile he's on) and the two tiles involved
-        ; current = the tile the robot is currently on
-        ; next = the tile to move to
+        ;; We need the robot (to check the current tile he's on) and the two tiles involved
+        ;; robot = a cleaning robot
+        ;; current = the tile the robot is currently on
+        ;; next = the tile to move to
         :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
-                        (robot-at ?robot ?current) ; Robot needs to be on the current tile.
-                        (down ?next ?current) ; If the next tile is below our current tile.
-                        (clear ?next)) ; Make sure the next tile is clear and the robot can move to it.
+                        (robot-at ?robot ?current) ;; Robot needs to be on the current tile before it can move to the next one.
+                        (down ?next ?current) ;; If the next tile is below our current tile.
+                        (clear ?next)) ;; Make sure the next tile is clear and the robot can move to it.
         :effect (and
-                    (not (robot-at ?robot ?current)) ; We're no longer at the current til. So let's make sure it's no longer true.
-                    (robot-at ?robot ?next) ; Allow the robot to move to next tile .
-                    (clear ?current) ; Robot is no longer on this tile. It's now clear.
-                    (not (clear ?next))) ; Next tile will have us on it.. Other bots cannot move to us
+                    (not (robot-at ?robot ?current)) ;; We're no longer at the current tile. So let's make sure it's no longer true.
+                    (robot-at ?robot ?next) ;; Update the robot's position to the next tile. 
+                    (clear ?current) ;; Robot is no longer on this tile. It's now clear.
+                    (not (clear ?next))) ;; Next tile will have us on it.. Other bots cannot move to us
     )
 
-    ; Allow the robot to move up
+    ;; Allow the robot to move to the tile above it's current position
     (:action move-up
+        ;; We need the robot (to check the current tile he's on) and the two tiles involved
+        ;; robot = a cleaning robot
+        ;; current = the tile the robot is currently on
+        ;; next = the tile to move to
         :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
-                        (robot-at ?robot ?current)
-                        (up ?next ?current) ; If the next tile is above our current tile .
-                        (clear ?next)) ;
+                        (robot-at ?robot ?current) ;; Robot needs to be on the current tile before it can move to the next one.
+                        (up ?next ?current) ;; If the next tile is above our current position.
+                        (clear ?next)) ;; Make sure the next tile is clear and the robot can move to it.
         :effect (and
-                    (not (robot-at ?robot ?current)) ; We're no longer at the current tile .
-                    (robot-at ?robot ?next) ; Allow the robot to move to next tile .
-                    (clear ?current) ; Robot is no longer on this tile. It's now clear.
-                    (not (clear ?next))) ; Next tile will have us on it.. Other bots cannot move to us
-    ); end move-up
+                    (not (robot-at ?robot ?current)) ;; We're no longer at the current tile .
+                    (robot-at ?robot ?next) ;; Update the robot's position to the next tile.
+                    (clear ?current) ;; Robot is no longer on this tile. It's now clear.
+                    (not (clear ?next))) ;; Next tile will have us on it.. Other bots cannot move to it
+    )
 
-    ; Allow the robot to move left
+    ;; Allow the robot to move left
     (:action move-left
+        ;; We need the robot (to check the current tile he's on) and the two tiles involved
+        ;; robot = a cleaning robot
+        ;; current = the tile the robot is currently on
+        ;; next = the tile to move to
         :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
-                        (robot-at ?robot ?current)
-                        (left ?next ?current) ; If the next tile is to the left of our current tile.
-                        (clear ?next))
+                        (robot-at ?robot ?current) ;; Robot needs to be on the current tile before it can move to the next one.
+                        (left ?next ?current) ;; If the next tile is to the left of our current tile.
+                        (clear ?next)) ;; Make sure the next tile is clear so the robot can move to it.
         :effect (and
-                    (not (robot-at ?robot ?current)) ; We're no longer at the current tile.
-                    (robot-at ?robot ?next) ; Allow the robot to move to next tile.
-                    (clear ?current) ; Robot is no longer on this tile. It's now clear.
-                    (not (clear ?next))) ; Next tile will have us on it.. Other bots cannot move to us
+                    (not (robot-at ?robot ?current)) ;; We're no longer at the current tile.
+                        (robot-at ?robot ?next) ;; Update the robot's current position.
+                    (clear ?current) ;; Robot is no longer on this tile. It's now clear.
+                    (not (clear ?next))) ;; Next tile will have us on it.. Other bots cannot move to us
     )
 
-    ; Allow the robot to move right
+    ;; Allow the robot to move right
     (:action move-right
+        ;; We need the robot (to check the current tile he's on) and the two tiles involved
+        ;; robot = a cleaning robot
+        ;; current = the tile the robot is currently on
+        ;; next = the tile to move to
         :parameters (?robot - robot ?current ?next - tile)
         :precondition (and
-                        (robot-at ?robot ?current)
-                        (right ?next ?current) ; If the next tile is to the right of our current tile .
-                        (clear ?next))
+                        (robot-at ?robot ?current) ;; Robot needs to be on the current tile before it can move to the next one.
+                        (right ?next ?current) ;; If the next tile is to the right of our current tile .
+                        (clear ?next)) ;; Make sure the next tile is clear and we can move to it.
         :effect (and
-                    (not (robot-at ?robot ?current)) ; We're no longer at the current tile.
-                    (robot-at ?robot ?next) ; Allow the robot to move to next tile.
-                    (clear ?current) ; Robot is no longer on this tile. It's now clear.
-                    (not (clear ?next))) ; Next tile will have us on it.. Other bots cannot move to us
+                    (not (robot-at ?robot ?current)) ;; Robot is no longer at the current tile.
+                    (robot-at ?robot ?next) ;; Update the robot's position to the next tile.
+                    (clear ?current) ;; Robot is no longer on this tile. It's now clear.
+                    (not (clear ?next))) ;; Next tile will have us on it.. Other bots cannot move to us
     )
+    ;; End of move actions
+    
+    ;; Clean actions (clean specified tiles)
 
-    ; Allow the robot to clean the tile above
+    ;; Clean the tile that is above the robot
     (:action clean-above
+        ;; We need the robot, the tile it's on and the tile to clean
+        ;; robot = a cleaning robot
+        ;; current = the tile the robot is currently on
+        ;; toclean = the tile to clean 
         :parameters (?robot - robot ?current ?toclean - tile)
         :precondition (and
-                        (robot-at ?robot ?current)
-                        (up ?toclean ?current)
-                        (clear ?toclean) ; Any robots on this tile?
-                        (not (cleaned ?toclean))) ; Make sure the tile we want to clean isn't already clean
+                        (robot-at ?robot ?current) ;; The robot needs to be at a tile before it can clean.
+                        (up ?toclean ?current) ;; If the tile we want to clean is above the robot's current tile.
+                        (clear ?toclean) ;; If the tile to clean is clear of all robots.
+                        (not (cleaned ?toclean))) ;; Make sure the tile we want to clean isn't already clean.
         :effect (and
-                    (cleaned ?toclean)
-                    (not (clear ?toclean)))
+                    (cleaned ?toclean) ;; Mark the tile as clean.
+                    (not (clear ?toclean))) ;; Make sure the robots know this tile can no longer be moved to.
     )
 
-    ; Allow the robot to clean the tile below
+    ;; Clean the tile below the robot
     (:action clean-below
+        ;; We need the robot, the tile it's on and the tile to clean
+        ;; robot = a cleaning robot
+        ;; current = the tile the robot is currently on
+        ;; toclean = the tile to clean 
         :parameters (?robot - robot ?current ?toclean - tile)
         :precondition (and
-                        (robot-at ?robot ?current)
-                        (down ?toclean ?current)
-                        (clear ?toclean)
-                        (not (cleaned ?toclean)))
+                        (robot-at ?robot ?current) ;; The robot needs to be at a tile before it can clean.
+                        (down ?toclean ?current) ;; If the tile we want to clean is below the robot's current tile.
+                        (clear ?toclean) ;; If the tile to clean is clear of all robots.
+                        (not (cleaned ?toclean))) ;; Make sure the tile we want to clean isn't already clean.
         :effect (and
-                    (cleaned ?toclean)
-                    (not (clear ?toclean)))
+                    (cleaned ?toclean) ;; Mark the tile as clean.
+                    (not (clear ?toclean))) ;; Make sure the robots know this tile can no longer be moved to.
     )
 
 )
