@@ -37,7 +37,7 @@
     ;; Move actions (moves the robot from one tile to another)
     
     ;; Allow the robot to move to the tile below it's current position
-    (:action move-down
+    (:action down
         ;; We need the robot (to check the current tile he's on) and the two tiles involved
         ;; robot = a cleaning robot
         ;; current = the tile the robot is currently on
@@ -55,7 +55,7 @@
     )
 
     ;; Allow the robot to move to the tile above it's current position
-    (:action move-up
+    (:action up
         ;; We need the robot (to check the current tile he's on) and the two tiles involved
         ;; robot = a cleaning robot
         ;; current = the tile the robot is currently on
@@ -73,7 +73,7 @@
     )
 
     ;; Allow the robot to move left
-    (:action move-left
+    (:action left
         ;; We need the robot (to check the current tile he's on) and the two tiles involved
         ;; robot = a cleaning robot
         ;; current = the tile the robot is currently on
@@ -91,7 +91,7 @@
     )
 
     ;; Allow the robot to move right
-    (:action move-right
+    (:action right
         ;; We need the robot (to check the current tile he's on) and the two tiles involved
         ;; robot = a cleaning robot
         ;; current = the tile the robot is currently on
@@ -112,7 +112,7 @@
     ;; Clean actions (clean specified tiles)
 
     ;; Clean the tile that is above the robot
-    (:action clean-above
+    (:action clean-up
         ;; We need the robot, the tile it's on and the tile to clean
         ;; robot = a cleaning robot
         ;; current = the tile the robot is currently on
@@ -129,7 +129,7 @@
     )
 
     ;; Clean the tile below the robot
-    (:action clean-below
+    (:action clean-down
         ;; We need the robot, the tile it's on and the tile to clean
         ;; robot = a cleaning robot
         ;; current = the tile the robot is currently on
